@@ -1,3 +1,4 @@
+using GracefulErrorHandling.Api.Behaviors;
 using GracefulErrorHandling.Api.Data;
 using GracefulErrorHandling.Api.Extensions;
 using MediatR;
@@ -44,6 +45,8 @@ namespace GracefulErrorHandling.Api
                 .AllowAnyHeader()
                 .SetIsOriginAllowed(isOriginAllowed: _ => true)
                 .AllowCredentials()));
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ErrorBehavior<,>));
 
             services.AddValidation(typeof(Startup));
 
