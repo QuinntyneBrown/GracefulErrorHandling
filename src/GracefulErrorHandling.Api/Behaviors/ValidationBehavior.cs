@@ -38,7 +38,6 @@ namespace GracefulErrorHandling.Api.Behaviors
                 return response;
             }
 
-
             return await next();
         }
     }

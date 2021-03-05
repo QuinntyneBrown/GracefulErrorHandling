@@ -4,9 +4,10 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse
+  HttpErrorResponse,
+  HttpResponse
 } from '@angular/common/http';
-import { Observable, of, onErrorResumeNext, throwError } from 'rxjs';
+import { empty, Observable, of, onErrorResumeNext, throwError } from 'rxjs';
 import { catchError, retry, switchMap } from 'rxjs/operators';
 import { Logger, LogLevel } from './logger.service';
 
@@ -19,6 +20,10 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   _count = 0;
 
+  responseHasValidationErrors(response: HttpResponse<any>): boolean {
+    return response.type && response.type == 4 && response.body.validationErrors && response.body.validationErrors.length > 0;
+  }
+
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request)
     .pipe(
@@ -29,17 +34,20 @@ export class ErrorInterceptor implements HttpInterceptor {
           return obs$
         }
 
+        console.log(error);
+        
+        this._logger.log(LogLevel.Error, error.message);
+
         return of(error.message);
 
       }),
-      switchMap(x => {
+      switchMap((x:HttpResponse<unknown>) => {
 
-        if(typeof x == "string") {          
-          alert(x);
+        
+        if(this.responseHasValidationErrors(x)) {
+          alert("validation errors")
 
-          this._logger.log(LogLevel.Error, x);
-
-          return of(null);
+          return empty();
         }
         
         return of(x);
