@@ -19,8 +19,8 @@ namespace GracefulErrorHandling.Api
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "",
-                    Description = "",
+                    Title = "Graceful Error Handling",
+                    Description = "Handling various errors and exceptions gracefully",
                     TermsOfService = new Uri("https://example.com/terms"),
                     Contact = new OpenApiContact
                     {
@@ -58,9 +58,7 @@ namespace GracefulErrorHandling.Api
 
             services.AddDbContext<GracefulErrorHandlingDbContext>(options =>
             {
-                options.UseSqlServer(configuration["Data:DefaultConnection:ConnectionString"],
-                    builder => builder.MigrationsAssembly("GracefulErrorHandling.Api")
-                        .EnableRetryOnFailure())
+                options.UseInMemoryDatabase(configuration["Data:DefaultConnection:ConnectionString"])
                 .UseLoggerFactory(GracefulErrorHandlingDbContext.ConsoleLoggerFactory)
                 .EnableSensitiveDataLogging();
             });
