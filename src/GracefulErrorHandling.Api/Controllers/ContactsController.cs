@@ -58,6 +58,10 @@ namespace GracefulErrorHandling.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(GetContacts.Response), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<GetContacts.Response>> Get([FromRoute]GetContacts.Request request)
-            => await _mediator.Send(request);           
+            => await _mediator.Send(request);
+
+        [HttpPost("upload"), DisableRequestSizeLimit]
+        public async Task<ActionResult<UploadContactsImportFiles.Response>> Upload()
+            => await _mediator.Send(new UploadContactsImportFiles.Request());
     }
 }

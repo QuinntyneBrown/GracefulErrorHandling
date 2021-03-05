@@ -13,6 +13,7 @@ namespace GracefulErrorHandling.Api.Data
             = LoggerFactory.Create(builder => { builder.AddConsole(); });
 
         public DbSet<Contact> Contacts { get; private set; }
+        public DbSet<ContactsImportFile> ContactsImportFiles { get; private set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -58,9 +58,7 @@ namespace GracefulErrorHandling.Api
 
             services.AddDbContext<GracefulErrorHandlingDbContext>(options =>
             {
-                options.UseSqlServer(configuration["Data:DefaultConnection:ConnectionString"],
-                    builder => builder.MigrationsAssembly("GracefulErrorHandling.Api")
-                        .EnableRetryOnFailure())
+                options.UseInMemoryDatabase(configuration["Data:DefaultConnection:ConnectionString"])
                 .UseLoggerFactory(GracefulErrorHandlingDbContext.ConsoleLoggerFactory)
                 .EnableSensitiveDataLogging();
             });

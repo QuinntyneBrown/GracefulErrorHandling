@@ -8,6 +8,7 @@ namespace GracefulErrorHandling.Api.Data
     public interface IGracefulErrorHandlingDbContext
     {
         DbSet<Contact> Contacts { get; }
+        DbSet<ContactsImportFile> ContactsImportFiles { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

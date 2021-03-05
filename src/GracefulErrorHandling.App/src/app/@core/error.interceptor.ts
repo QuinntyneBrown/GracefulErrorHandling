@@ -42,11 +42,8 @@ export class ErrorInterceptor implements HttpInterceptor {
 
       }),
       switchMap((x:HttpResponse<unknown>) => {
-
-        
         if(this.responseHasValidationErrors(x)) {
           alert("validation errors")
-
           return empty();
         }
         

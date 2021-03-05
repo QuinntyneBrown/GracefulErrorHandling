@@ -30,6 +30,11 @@ export class ContactService implements IPagable<Contact> {
       );
   }
 
+  public import(options: { data: FormData }): Observable<{ contactIds: number[] }> {
+    return this._client.post<{ contactIds: number[] }>(`${this._baseUrl}api/contacts/import`,
+      options.data);
+  }
+
   public remove(options: { contact: Contact }): Observable<void> {
     return this._client.delete<void>(`${this._baseUrl}api/contacts/${options.contact.contactId}`);
   }
