@@ -53,11 +53,11 @@ namespace GracefulErrorHandling.Api.Controllers
             return response;
         }
 
-        [HttpGet(Name = "GetContactsRoute")]
+        [HttpGet("get/{pageSize}/{pageIndex}", Name = "GetContactsRoute")]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(GetContacts.Response), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<GetContacts.Response>> Get()
-            => await _mediator.Send(new GetContacts.Request());           
+        public async Task<ActionResult<GetContacts.Response>> Get([FromRoute]GetContacts.Request request)
+            => await _mediator.Send(request);           
     }
 }
