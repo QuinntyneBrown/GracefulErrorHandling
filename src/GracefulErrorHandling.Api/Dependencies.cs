@@ -59,7 +59,7 @@ namespace GracefulErrorHandling.Api
             services.AddDbContext<GracefulErrorHandlingDbContext>(options =>
             {
                 options.UseInMemoryDatabase(configuration["Data:DefaultConnection:ConnectionString"])
-                .UseLoggerFactory(GracefulErrorHandlingDbContext.ConsoleLoggerFactory)
+                .LogTo(Console.WriteLine)
                 .EnableSensitiveDataLogging();
             });
 
